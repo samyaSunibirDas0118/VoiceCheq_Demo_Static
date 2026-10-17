@@ -277,6 +277,76 @@ input:focus-visible {
   animation: fadeUp 1s 0.35s ease both;
 }
 
+/* ── APP LAUNCH + WAITLIST ── */
+.hero-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 40px;
+  animation: fadeUp 1s 0.65s ease both;
+}
+
+.store-soon {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  height: 52px;
+  padding: 0 22px 0 18px;
+  border: 1px solid var(--border-strong);
+  border-radius: 10px;
+  background: var(--surface);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  color: var(--dim-2);
+  cursor: default;
+  user-select: none;
+}
+
+.store-soon svg {
+  width: 18px;
+  height: 18px;
+  stroke: var(--white);
+  opacity: 0.85;
+  flex-shrink: 0;
+}
+
+.store-soon strong {
+  font-weight: 500;
+  color: var(--white);
+}
+
+.waitlist-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 52px;
+  padding: 0 24px;
+  border-radius: 10px;
+  background: var(--white);
+  color: var(--bg);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.waitlist-btn:hover { background: rgba(255,255,255,0.85); }
+
+.waitlist-btn svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  transition: transform 0.2s ease;
+}
+
+.waitlist-btn:hover svg { transform: translateX(3px); }
+
 /* ── WAVEFORM ANIMATION ── */
 .waveform {
   display: flex;
@@ -862,6 +932,8 @@ footer {
 }
 
 @media (max-width: 480px) {
+  .hero-cta { flex-direction: column; width: 100%; max-width: 320px; }
+  .store-soon, .waitlist-btn { width: 100%; justify-content: center; }
   .headline { font-size: clamp(40px, 13vw, 60px); }
   .motto { font-size: 14px; }
   .section-title { font-size: clamp(30px, 9vw, 40px); }
@@ -949,6 +1021,18 @@ alt="VoiceCheq V mark"
     <span class="tag">Fintechs</span>
     <span class="tag">Banks</span>
     <span class="tag">Crypto</span>
+  </div>
+
+  <!-- App launch + waitlist -->
+  <div class="hero-cta">
+    <div class="store-soon">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M10.5 18.5h3"/></svg>
+      <span><strong>Coming soon</strong> to the App Store</span>
+    </div>
+    <a class="waitlist-btn" href="https://tally.so/r/VpEbKy" target="_blank" rel="noopener noreferrer">
+      Join the waitlist
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.75" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+    </a>
   </div>
 
 </section>
