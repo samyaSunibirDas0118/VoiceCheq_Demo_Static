@@ -958,6 +958,7 @@ footer {
   max-height: calc(100vh - var(--nav-h) - 64px);
   overflow-y: auto;
   scrollbar-width: none;
+  padding-bottom: 16px;
 }
 
 .pp-toc::-webkit-scrollbar { display: none; }
@@ -1275,6 +1276,13 @@ footer {
 .pp-end a:hover { color: var(--white); }
 
 .footer-right a[aria-current="page"] { color: var(--white); }
+
+.pp-toc--dense a { padding-top: 6px; padding-bottom: 6px; }
+
+.pp-section.pp-intro p {
+  font-size: 16px;
+  color: var(--dim-2);
+}
 
 /* ── Privacy responsive ── */
 @media (max-width: 920px) {
@@ -1603,7 +1611,7 @@ alt="VoiceCheq V mark"
             <li>prevent fraud, abuse and unauthorized access, and keep the service secure;</li>
             <li>send you emails about your account, such as confirming your email address or resetting your password;</li>
             <li>answer your questions and fix problems;</li>
-            <li>meet our legal, tax and regulatory obligations, and enforce our terms.</li>
+            <li>meet our legal, tax and regulatory obligations, and enforce our <a href="/terms">terms</a>.</li>
           </ul>
 
           <p>We don't use your information for advertising, we don't build marketing profiles, and we don't sell it.</p>
@@ -1829,13 +1837,13 @@ alt="VoiceCheq V mark"
           <p>Questions or requests about your privacy:</p>
 
           <div class="contact-list">
-            <a class="contact-item" href="mailto:micah@voicecheq.com">
+            <a class="contact-item" href="mailto:admin@voicecheq.com">
               <span class="contact-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M2 5h20v14H2V5z"/><path d="M2 6l10 7L22 6"/></svg>
               </span>
               <span class="contact-meta">
                 <span class="contact-label">Privacy questions &amp; requests</span>
-                <span class="contact-value">micah@voicecheq.com</span>
+                <span class="contact-value">admin@voicecheq.com</span>
               </span>
             </a>
 
@@ -1881,7 +1889,7 @@ alt="VoiceCheq V mark"
   <div class="footer-right">
     <a href="/#contact">Contact</a>
     <a href="/privacy" aria-current="page">Privacy</a>
-    <a href="#">Terms</a>
+    <a href="/terms">Terms</a>
   </div>
 </footer>
 
@@ -1934,9 +1942,23 @@ alt="VoiceCheq V mark"
     tocLinks.forEach(function (a, i) {
       a.classList.toggle('active', i === current);
     });
+    keepTocItemVisible(current);
   }
-  window.addEventListener('scroll', updateToc, { passive: true });
+
+  // Long contents lists scroll inside the sticky sidebar; keep the active item in view
+  var toc = document.querySelector('.pp-toc');
+  var lastTocItem = -1;
+  function keepTocItemVisible(i) {
+    if (i === lastTocItem) return;
+    lastTocItem = i;
+    if (i < 0 || !toc || toc.scrollHeight <= toc.clientHeight) return;
+    var a = tocLinks[i], pad = 48;
+    var top = a.offsetTop, bottom = top + a.offsetHeight;
+    if (top - pad < toc.scrollTop) { toc.scrollTop = Math.max(0, top - pad); }
+    else if (bottom + pad > toc.scrollTop + toc.clientHeight) { toc.scrollTop = bottom + pad - toc.clientHeight; }
+  }
   updateToc();
+  window.addEventListener('scroll', updateToc, { passive: true });
 
   // ── In-page links (#privacy-…, Back to top) ──
   // Scrolled in JavaScript so they also work inside embedded previews and site builders.
